@@ -1,4 +1,4 @@
-const URL = "https://andreasvikke.dk/CA3";
+const URL = "https://melif.dk/Exam";
 
 function handleHttpErrors(res) {
     if (!res.ok) {

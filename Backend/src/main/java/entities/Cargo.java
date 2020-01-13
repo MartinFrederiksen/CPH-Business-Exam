@@ -18,13 +18,13 @@ public class Cargo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int weight;
+    private double weight;
     private int units;
 
     public Cargo() {
     }
 
-    public Cargo(String name, int weight, int units) {
+    public Cargo(String name, double weight, int units) {
         this.name = name;
         this.weight = weight;
         this.units = units;
@@ -46,11 +46,11 @@ public class Cargo implements Serializable {
         this.name = name;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

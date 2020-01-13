@@ -9,13 +9,13 @@ import entities.Cargo;
 public class CargoDTO {
     private Long id;
     private String name;
-    private int weight;
+    private double weight;
     private int units;
 
     public CargoDTO() {
     }
 
-    public CargoDTO(String name, int weight, int units) {
+    public CargoDTO(String name, double weight, int units) {
         this.name = name;
         this.weight = weight;
         this.units = units;
@@ -44,11 +44,11 @@ public class CargoDTO {
         this.name = name;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 

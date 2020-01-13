@@ -21,6 +21,8 @@ export default function LoggedIn() {
 
   return (
     <div>
+      <p>Username: {username}</p>
+      <p>Role: {role}</p>
       <button type="button" className="btn btn-dark" name="delivery" onClick={onClick}>Delivery</button>
       <button type="button" className="btn btn-dark" name="cargo" onClick={onClick}>Cargo</button>
       <button type="button" className="btn btn-dark" name="truck" onClick={onClick}>Truck</button>
@@ -41,5 +43,7 @@ function goTo(name) {
       return (<Driver />)
     case "truck":
       return (<Truck />)
+    default:
+      return "";
   }
 }

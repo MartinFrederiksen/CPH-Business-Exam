@@ -4,6 +4,14 @@
   <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entities.RenameMe</class>
+    <class>entities.Truck</class>
+    <class>entities.Driver</class>
+    <class>entities.Delivery</class>
+    <class>entities.Cargo</class>
+    <class>entities.dto.CargoDTO</class>
+    <class>entities.dto.TruckDTO</class>
+    <class>entities.dto.DeliveryDTO</class>
+    <class>entities.dto.DriverDTO</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->

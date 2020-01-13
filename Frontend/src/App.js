@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import './style/App.css';
 import LoginForm from './login/LoginForm';
-import URLSettings from './settings'
-import Data from './Data';
+import URLSettings from './Settings'
+import Info from './Info';
 
 function App() {
 
@@ -15,8 +15,7 @@ function App() {
         <Switch>
           <Route exact path={URLSettings.getURL("Home")}> <Welcome /> </Route>
           <Route path={URLSettings.getURL("Login")}> <LoginForm /> </Route>
-          <Route path={URLSettings.getURL("Data")}> <Data /> </Route>
-          <Route path={URLSettings.getURL("About")}> <About /> </Route>
+          <Route path={URLSettings.getURL("Info")}> <Info /> </Route>
           <Route path={URLSettings.getURL("NoMatch")}> <NoMatch /> </Route>
         </Switch>
         <Footer />
@@ -29,10 +28,8 @@ const Header = () => {
   return (
     <ul className="header">
       <li><NavLink activeClassName="active" exact to={URLSettings.getURL("Home")}>Home</NavLink></li>
+      <li><NavLink activeClassName="active" to={URLSettings.getURL("Info")}>Info</NavLink></li>
       <li><NavLink activeClassName="active" to={URLSettings.getURL("Login")}>Login</NavLink></li>
-      <li><NavLink activeClassName="active" to={URLSettings.getURL("Data")}>Data</NavLink></li>
-      <li><NavLink activeClassName="active" to={URLSettings.getURL("About")}>About</NavLink></li>
-      <li><NavLink activeClassName="active" to={URLSettings.getURL("FAQ")}>FAQ</NavLink></li>
     </ul>
   )
 }
@@ -41,13 +38,11 @@ const Footer = () => {
   return (
     <footer>
       <div className="d-flex justify-content-center align-items-center">
-        <span> © Copyright 2019 - Martin Frederiksen, Andreas Vikke, Emil Svensmark, Asger Sørensen, & William Huusfeldt. </span>
+        <span> © Copyright 2019 - Martin Frederiksen.</span>
       </div>
     </footer>
   )
 }
-
-const About = () => <div>About</div>
 
 const NoMatch = () => <div>No match!</div>
 

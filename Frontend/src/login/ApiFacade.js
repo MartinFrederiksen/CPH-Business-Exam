@@ -69,10 +69,6 @@ function ApiFacade() {
         return fetch(URL + "/api/Driver/delete/" + id, makeOptions("DELETE")).then(handleHttpErrors);
     }
 
-    const fetchDriverDelete = (id) => {
-        return fetch(URL + "/api/Driver/delete/" + id, makeOptions("DELETE")).then(handleHttpErrors);
-    }
-
     const fetchDeliveries = () => {
         return fetch(URL + "/api/Delivery/all", makeOptions("GET")).then(handleHttpErrors);
     }

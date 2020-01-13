@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -20,7 +21,11 @@ public class Cargo implements Serializable {
     private String name;
     private double weight;
     private int units;
+    @ManyToOne
+    private Delivery delivery;
 
+
+    
     public Cargo() {
     }
 
@@ -61,4 +66,13 @@ public class Cargo implements Serializable {
     public void setUnits(int units) {
         this.units = units;
     }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+    
 }

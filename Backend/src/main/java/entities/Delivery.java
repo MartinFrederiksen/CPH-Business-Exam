@@ -23,11 +23,12 @@ public class Delivery implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date shippingDate;
-    private String FromLocation;
-    private String Destination;
-    @OneToMany
+    private String fromLocation;
+    private String destination;
+    
+    @OneToMany(mappedBy = "delivery")
     private List<Cargo> cargoes;
     @ManyToOne
     private Truck truck;
@@ -35,12 +36,10 @@ public class Delivery implements Serializable {
     public Delivery() {
     }
 
-    public Delivery(Date shippingDate, String FromLocation, String Destination, List<Cargo> cargoes, Truck truck) {
+    public Delivery(Date shippingDate, String fromLocation, String destination) {
         this.shippingDate = shippingDate;
-        this.FromLocation = FromLocation;
-        this.Destination = Destination;
-        this.cargoes = cargoes;
-        this.truck = truck;
+        this.fromLocation = fromLocation;
+        this.destination = destination;
     }
     
     public Long getId() {
@@ -60,19 +59,19 @@ public class Delivery implements Serializable {
     }
 
     public String getFromLocation() {
-        return FromLocation;
+        return fromLocation;
     }
 
-    public void setFromLocation(String FromLocation) {
-        this.FromLocation = FromLocation;
+    public void setFromLocation(String fromLocation) {
+        this.fromLocation = fromLocation;
     }
 
     public String getDestination() {
-        return Destination;
+        return destination;
     }
 
-    public void setDestination(String Destination) {
-        this.Destination = Destination;
+    public void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public List<Cargo> getCargoes() {

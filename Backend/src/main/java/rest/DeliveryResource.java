@@ -7,11 +7,9 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import entities.Delivery;
 import entities.dto.DeliveryDTO;
 import facades.DeliveryFacade;
 import java.util.List;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
@@ -78,7 +76,7 @@ public class DeliveryResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     //@RolesAllowed("admin")
-    public DeliveryDTO edit(DeliveryDTO deliveryDTO) throws Exception {
+    public DeliveryDTO edit(@PathParam("id") long id, DeliveryDTO deliveryDTO) throws Exception {
         return facade.edit(deliveryDTO);
     }
 }

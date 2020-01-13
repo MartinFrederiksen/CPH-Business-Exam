@@ -1,10 +1,7 @@
 package facades;
 
-import entities.Driver;
 import entities.Truck;
-import entities.dto.DriverDTO;
 import entities.dto.TruckDTO;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -60,10 +57,14 @@ public class TruckFacade implements IFacade<TruckDTO> {
     public TruckDTO add(TruckDTO truckDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Truck truck = em.find(Truck.class, truckDTO.getId());
-            if(truck == null){
+            /*List<Truck> lookupTruck = em.createQuery("SELECT truck FROM Truck truck WHERE truck.name = :name AND truck.capacity = :capacity").setParameter("name", truckDTO.getName()).setParameter("capacity", truckDTO.getCapacity()).getResultList();
+            if(lookupTruck.size() != 0){
+                throw new WebApplicationException("Truck already exists");
+            }*/ 
+            if(truckDTO.getId() != null){
                 throw new WebApplicationException("Truck already exists");
             }
+            Truck truck = new Truck(truckDTO.getName(), truckDTO.getCapacity());
             em.getTransaction().begin();
             em.persist(truck);
             em.getTransaction().commit();
@@ -98,13 +99,8 @@ public class TruckFacade implements IFacade<TruckDTO> {
             if(truck == null) {
                 throw new WebApplicationException("Could not find truck with id: " + truckDTO.getId());
             }
-            List<Driver> drivers = new ArrayList();
-            for(DriverDTO d : truckDTO.getDrivers()) {
-                drivers.add(em.find(Driver.class, d.getId()));
-            }
             truck.setName(truckDTO.getName());
             truck.setCapacity(truck.getCapacity());
-            truck.setDrivers(drivers);
             em.getTransaction().begin();
             em.merge(truck);
             em.getTransaction().commit();

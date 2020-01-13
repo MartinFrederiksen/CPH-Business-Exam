@@ -60,10 +60,10 @@ public class DriverFacade implements IFacade<DriverDTO> {
     public DriverDTO add(DriverDTO driverDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Driver driver = em.find(Driver.class, driverDTO.getId());
-            if(driver == null){
+            if(driverDTO.getId() != null){
                 throw new WebApplicationException("Driver already exists");
             }
+            Driver driver = new Driver(driverDTO.getName());
             em.getTransaction().begin();
             em.persist(driver);
             em.getTransaction().commit();
@@ -98,12 +98,7 @@ public class DriverFacade implements IFacade<DriverDTO> {
             if(driver == null) {
                 throw new WebApplicationException("Could not find driver with id: " + driverDTO.getId());
             }
-            List<Truck> trucks = new ArrayList();
-            for(TruckDTO t : driverDTO.getTrucks()) {
-                trucks.add(em.find(Truck.class, t.getId()));
-            }
             driver.setName(driverDTO.getName());
-            driver.setTrucks(trucks);
             em.getTransaction().begin();
             em.merge(driver);
             em.getTransaction().commit();

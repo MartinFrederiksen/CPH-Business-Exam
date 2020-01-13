@@ -1,6 +1,7 @@
 package entities.dto;
 
 import entities.Cargo;
+import java.util.Objects;
 
 /**
  *
@@ -58,6 +59,43 @@ public class CargoDTO {
 
     public void setUnits(int units) {
         this.units = units;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + (int) (Double.doubleToLongBits(this.weight) ^ (Double.doubleToLongBits(this.weight) >>> 32));
+        hash = 79 * hash + this.units;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CargoDTO other = (CargoDTO) obj;
+        if (Double.doubleToLongBits(this.weight) != Double.doubleToLongBits(other.weight)) {
+            return false;
+        }
+        if (this.units != other.units) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
 }

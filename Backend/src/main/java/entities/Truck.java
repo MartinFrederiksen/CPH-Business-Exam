@@ -21,21 +21,18 @@ public class Truck implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int Capacity;
+    private int capacity;
     @ManyToMany
-    List<Driver> drivers;
+    private List<Driver> drivers;
     @OneToMany(mappedBy = "truck")
-    List<Delivery> deliveries;
+    private List<Delivery> deliveries;
 
     public Truck() {
     }
 
-    public Truck(String name, int Capacity, List<Driver> drivers, List<Delivery> deliveries) {
+    public Truck(String name, int capacity) {
         this.name = name;
-        this.Capacity = Capacity;
-        this.drivers = drivers;
-        this.deliveries = deliveries;
-        
+        this.capacity = capacity;
     }
     
     public Long getId() {
@@ -55,11 +52,11 @@ public class Truck implements Serializable {
     }
 
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int Capacity) {
-        this.Capacity = Capacity;
+        this.capacity = Capacity;
     }
 
     public List<Driver> getDrivers() {

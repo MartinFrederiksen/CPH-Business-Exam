@@ -45,7 +45,7 @@ public class CargoFacade implements IFacade<CargoDTO> {
         try {
             Cargo cargo = em.find(Cargo.class, id);
             if(cargo == null) {
-                throw new WebApplicationException("Could not find cargo with id: " + id);
+                throw new WebApplicationException("Could not find cargo with id: " + id, 404);
             }
             return new CargoDTO(cargo);
         } finally {
@@ -57,10 +57,10 @@ public class CargoFacade implements IFacade<CargoDTO> {
     public CargoDTO add(CargoDTO cargoDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Cargo cargo = em.find(Cargo.class, cargoDTO.getId());
-            if(cargo == null){
-                throw new WebApplicationException("Cargo already exists");
+            if(cargoDTO.getId() != null){
+                throw new WebApplicationException("Cargo already exists", 302);
             }
+            Cargo cargo = new Cargo(cargoDTO.getName(), cargoDTO.getWeight(), cargoDTO.getUnits());
             em.getTransaction().begin();
             em.persist(cargo);
             em.getTransaction().commit();
@@ -76,7 +76,7 @@ public class CargoFacade implements IFacade<CargoDTO> {
         try {
             Cargo cargo = em.find(Cargo.class, id);
             if(cargo == null) {
-                throw new WebApplicationException("Could not find cargo with id: " + id);
+                throw new WebApplicationException("Could not find cargo with id: " + id, 404);
             }
             em.getTransaction().begin();
             em.remove(cargo);
@@ -91,13 +91,10 @@ public class CargoFacade implements IFacade<CargoDTO> {
     public CargoDTO edit(CargoDTO cargoDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Cargo cargo = em.find(Cargo.class, cargoDTO.getId());
-            if(cargo == null) {
-                throw new WebApplicationException("Could not find cargo with id: " + cargoDTO.getId());
+            if(cargoDTO.getId() == null) {
+                throw new WebApplicationException("Could not find cargo with id: " + cargoDTO.getId(), 404);
             }
-            cargo.setName(cargoDTO.getName());
-            cargo.setUnits(cargoDTO.getUnits());
-            cargo.setWeight(cargoDTO.getWeight());
+            Cargo cargo = new Cargo(cargoDTO.getName(), cargoDTO.getWeight(), cargoDTO.getUnits());
             em.getTransaction().begin();
             em.merge(cargo);
             em.getTransaction().commit();

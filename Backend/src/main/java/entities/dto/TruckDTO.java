@@ -1,9 +1,8 @@
 package entities.dto;
 
-import entities.Driver;
 import entities.Truck;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -12,26 +11,23 @@ import java.util.List;
 public class TruckDTO {
     private Long id;
     private String name;
-    private int Capacity;
+    private int capacity;
     private List<DriverDTO> drivers;
+    private List<DeliveryDTO> deliveries;
 
     public TruckDTO() {
     }
 
-    public TruckDTO(String name, int Capacity, List<DriverDTO> drivers) {
+    public TruckDTO(String name, int capacity) {
         this.name = name;
-        this.Capacity = Capacity;
+        this.capacity = capacity;
         this.drivers = drivers;
     }
     
     public TruckDTO(Truck truck) {
         this.id = truck.getId();
         this.name = truck.getName();
-        this.Capacity = truck.getCapacity();
-        this.drivers = new ArrayList();
-        for(Driver d : truck.getDrivers()){
-            drivers.add(new DriverDTO(d));
-        }
+        this.capacity = truck.getCapacity();
     }
 
     public Long getId() {
@@ -51,11 +47,11 @@ public class TruckDTO {
     }
 
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int Capacity) {
-        this.Capacity = Capacity;
+        this.capacity = Capacity;
     }
 
     public List<DriverDTO> getDrivers() {
@@ -64,6 +60,55 @@ public class TruckDTO {
 
     public void setDrivers(List<DriverDTO> drivers) {
         this.drivers = drivers;
+    }
+
+    public List<DeliveryDTO> getDeliveries() {
+        return deliveries;
+    }
+
+    public void setDeliveries(List<DeliveryDTO> deliveries) {
+        this.deliveries = deliveries;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.id);
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + this.capacity;
+        hash = 61 * hash + Objects.hashCode(this.drivers);
+        hash = 61 * hash + Objects.hashCode(this.deliveries);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final TruckDTO other = (TruckDTO) obj;
+        if (this.capacity != other.capacity) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.drivers, other.drivers)) {
+            return false;
+        }
+        if (!Objects.equals(this.deliveries, other.deliveries)) {
+            return false;
+        }
+        return true;
     }
     
 }

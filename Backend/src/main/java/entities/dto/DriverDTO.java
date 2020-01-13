@@ -2,6 +2,7 @@ package entities.dto;
 
 import entities.Driver;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -47,6 +48,39 @@ public class DriverDTO {
 
     public void setTrucks(List<TruckDTO> trucks) {
         this.trucks = trucks;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.trucks);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DriverDTO other = (DriverDTO) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.trucks, other.trucks)) {
+            return false;
+        }
+        return true;
     }
     
 }

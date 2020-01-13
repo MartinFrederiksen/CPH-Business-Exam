@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import './style/App.css';
 import LoginForm from './login/LoginForm';
-import URLSettings from './Settings'
+import URLSettings from './settings'
 import Info from './Info';
 
 function App() {

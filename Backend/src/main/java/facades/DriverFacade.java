@@ -1,10 +1,7 @@
 package facades;
 
 import entities.Driver;
-import entities.Truck;
 import entities.dto.DriverDTO;
-import entities.dto.TruckDTO;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -48,7 +45,7 @@ public class DriverFacade implements IFacade<DriverDTO> {
         try {
             Driver driver = em.find(Driver.class, id);
             if(driver == null) {
-                throw new WebApplicationException("Could not find driver with id: " + id);
+                throw new WebApplicationException("Could not find driver with id: " + id, 404);
             }
             return new DriverDTO(driver);
         } finally {
@@ -61,7 +58,7 @@ public class DriverFacade implements IFacade<DriverDTO> {
         EntityManager em = getEntityManager();
         try {
             if(driverDTO.getId() != null){
-                throw new WebApplicationException("Driver already exists");
+                throw new WebApplicationException("Driver already exists", 302);
             }
             Driver driver = new Driver(driverDTO.getName());
             em.getTransaction().begin();
@@ -79,7 +76,7 @@ public class DriverFacade implements IFacade<DriverDTO> {
         try {
             Driver driver = em.find(Driver.class, id);
             if(driver == null) {
-                throw new WebApplicationException("Could not find driver with id: " + id);
+                throw new WebApplicationException("Could not find driver with id: " + id, 404);
             }
             em.getTransaction().begin();
             em.remove(driver);
@@ -94,10 +91,10 @@ public class DriverFacade implements IFacade<DriverDTO> {
     public DriverDTO edit(DriverDTO driverDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Driver driver = em.find(Driver.class, driverDTO.getId());
-            if(driver == null) {
-                throw new WebApplicationException("Could not find driver with id: " + driverDTO.getId());
+            if(driverDTO.getId() == null) {
+                throw new WebApplicationException("Could not find driver with id: " + driverDTO.getId(), 404);
             }
+            Driver driver = em.find(Driver.class, driverDTO.getId());
             driver.setName(driverDTO.getName());
             em.getTransaction().begin();
             em.merge(driver);

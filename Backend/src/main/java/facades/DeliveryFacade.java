@@ -2,6 +2,7 @@ package facades;
 
 import entities.Delivery;
 import entities.dto.DeliveryDTO;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -47,7 +48,7 @@ public class DeliveryFacade implements IFacade<DeliveryDTO> {
         try {
             Delivery delivery = em.find(Delivery.class, id);
             if (delivery == null) {
-                throw new WebApplicationException("Could not find delivery with id: " + id);
+                throw new WebApplicationException("Could not find delivery with id: " + id, 404);
             }
             return new DeliveryDTO(delivery);
         } finally {
@@ -60,9 +61,9 @@ public class DeliveryFacade implements IFacade<DeliveryDTO> {
         EntityManager em = getEntityManager();
         try {
             if (deliveryDTO.getId() != null) {
-                throw new WebApplicationException("Delivery already exists");
+                throw new WebApplicationException("Delivery already exists", 302);
             }
-            Delivery delivery = new Delivery(deliveryDTO.getShippingDate(), deliveryDTO.getFromLocation(), deliveryDTO.getDestination());
+            Delivery delivery = new Delivery(new Date(), deliveryDTO.getFromLocation(), deliveryDTO.getDestination());
             em.getTransaction().begin();
             em.persist(delivery);
             em.getTransaction().commit();
@@ -78,7 +79,7 @@ public class DeliveryFacade implements IFacade<DeliveryDTO> {
         try {
             Delivery delivery = em.find(Delivery.class, id);
             if (delivery == null) {
-                throw new WebApplicationException("Could not find delivery with id: " + id);
+                throw new WebApplicationException("Could not find delivery with id: " + id, 404);
             }
             em.getTransaction().begin();
             em.remove(delivery);
@@ -93,10 +94,10 @@ public class DeliveryFacade implements IFacade<DeliveryDTO> {
     public DeliveryDTO edit(DeliveryDTO deliveryDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Delivery delivery = em.find(Delivery.class, deliveryDTO.getId());
-            if (delivery == null) {
-                throw new WebApplicationException("Could not find delivery with id: " + deliveryDTO.getId());
+            if (deliveryDTO.getId() == null) {
+                throw new WebApplicationException("Could not find delivery with id: " + deliveryDTO.getId(), 404);
             }
+            Delivery delivery = em.find(Delivery.class, deliveryDTO.getId());
             delivery.setShippingDate(deliveryDTO.getShippingDate());
             delivery.setFromLocation(deliveryDTO.getFromLocation());
             delivery.setDestination(deliveryDTO.getDestination());

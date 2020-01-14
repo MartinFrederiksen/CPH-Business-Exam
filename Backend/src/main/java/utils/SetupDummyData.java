@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
  * @author Martin Frederiksen
  */
 public class SetupDummyData {
-    public static void main(String[] args) {
+    public void setup() {
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
         EntityManager em = emf.createEntityManager();
 
@@ -46,8 +46,6 @@ public class SetupDummyData {
         c3.setDelivery(de2);
         c4.setDelivery(de3);
         c5.setDelivery(de4);
-
-        
         
         try {
             em.getTransaction().begin();
@@ -69,6 +67,9 @@ public class SetupDummyData {
         } finally {
             em.close();
         }
-        
     }
+    /*
+    public static void main(String[] args) {
+        new SetupDummyData().setup();   
+    }*/
 }

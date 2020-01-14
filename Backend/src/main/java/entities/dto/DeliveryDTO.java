@@ -20,8 +20,8 @@ public class DeliveryDTO {
     public DeliveryDTO() {
     }
 
-    public DeliveryDTO(Date shippingDate, String fromLocation, String destination) {
-        this.shippingDate = shippingDate;
+    public DeliveryDTO(String fromLocation, String destination) {
+        this.shippingDate = new Date();
         this.fromLocation = fromLocation;
         this.destination = destination;
     }

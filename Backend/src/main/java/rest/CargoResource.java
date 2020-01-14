@@ -6,6 +6,7 @@ import entities.dto.CargoDTO;
 import facades.CargoFacade;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
@@ -67,6 +68,7 @@ public class CargoResource {
     @DELETE
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     //@RolesAllowed("admin")
     public CargoDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
@@ -78,6 +80,7 @@ public class CargoResource {
     @PUT
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     //@RolesAllowed("admin")
     public CargoDTO edit(CargoDTO cargoDTO) throws Exception {
         return facade.edit(cargoDTO);

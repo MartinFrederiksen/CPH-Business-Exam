@@ -45,7 +45,7 @@ public class TruckFacade implements IFacade<TruckDTO> {
         try {
             Truck truck = em.find(Truck.class, id);
             if(truck == null) {
-                throw new WebApplicationException("Could not find truck with id: " + id);
+                throw new WebApplicationException("Could not find truck with id: " + id, 404);
             }
             return new TruckDTO(truck);
         } finally {
@@ -62,7 +62,7 @@ public class TruckFacade implements IFacade<TruckDTO> {
                 throw new WebApplicationException("Truck already exists");
             }*/ 
             if(truckDTO.getId() != null){
-                throw new WebApplicationException("Truck already exists");
+                throw new WebApplicationException("Truck already exists", 302);
             }
             Truck truck = new Truck(truckDTO.getName(), truckDTO.getCapacity());
             em.getTransaction().begin();
@@ -80,7 +80,7 @@ public class TruckFacade implements IFacade<TruckDTO> {
         try {
             Truck truck = em.find(Truck.class, id);
             if(truck == null) {
-                throw new WebApplicationException("Could not find truck with id: " + id);
+                throw new WebApplicationException("Could not find truck with id: " + id, 404);
             }
             em.getTransaction().begin();
             em.remove(truck);
@@ -95,10 +95,10 @@ public class TruckFacade implements IFacade<TruckDTO> {
     public TruckDTO edit(TruckDTO truckDTO) throws WebApplicationException {
         EntityManager em = getEntityManager();
         try {
-            Truck truck = em.find(Truck.class, truckDTO.getId());
-            if(truck == null) {
-                throw new WebApplicationException("Could not find truck with id: " + truckDTO.getId());
+            if(truckDTO.getId() == null) {
+                throw new WebApplicationException("Could not find truck with id: " + truckDTO.getId(), 404);
             }
+            Truck truck = em.find(Truck.class, truckDTO.getId());
             truck.setName(truckDTO.getName());
             truck.setCapacity(truck.getCapacity());
             em.getTransaction().begin();

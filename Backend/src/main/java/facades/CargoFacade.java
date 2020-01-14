@@ -94,7 +94,10 @@ public class CargoFacade implements IFacade<CargoDTO> {
             if(cargoDTO.getId() == null) {
                 throw new WebApplicationException("Could not find cargo with id: " + cargoDTO.getId(), 404);
             }
-            Cargo cargo = new Cargo(cargoDTO.getName(), cargoDTO.getWeight(), cargoDTO.getUnits());
+            Cargo cargo = em.find(Cargo.class, cargoDTO.getId());
+            cargo.setName(cargoDTO.getName());
+            cargo.setWeight(cargoDTO.getWeight());
+            cargo.setUnits(cargoDTO.getUnits());
             em.getTransaction().begin();
             em.merge(cargo);
             em.getTransaction().commit();

@@ -1,6 +1,5 @@
 package entities.dto;
 
-import entities.Role;
 import java.util.ArrayList;
 import java.util.List;
 

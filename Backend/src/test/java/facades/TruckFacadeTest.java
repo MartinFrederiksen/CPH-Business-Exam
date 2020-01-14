@@ -1,8 +1,6 @@
 package facades;
 
-import entities.Cargo;
 import entities.Truck;
-import entities.dto.CargoDTO;
 import entities.dto.TruckDTO;
 import java.util.ArrayList;
 import java.util.List;

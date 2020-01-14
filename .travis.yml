@@ -21,7 +21,7 @@ script:
   - npm install
   - npm install -g surge
   - npm run build
-  - surge --project ./build --domain exam.melif.dk
+  - surge --project ./build --domain examMelif.surge.sh
 
 services:
    - mysql

@@ -62,7 +62,15 @@ const NoMatch = () => <div>No match!</div>
 function Welcome() {
   return (
     <div className="d-flex justify-content-center align-items-center link">
-      <a href="https://github.com/asgerhs/CA-3/blob/master/README.md">Press me for quick start guide!!</a>
+      <d>
+        <p>Kunne fremvise egne kodeeksempler med implementering af simple relationer mellem JPA entiter (OneToMany, OneToOne, ManyToOne)</p>
+        <p>Kunne demonstrere kode med grundlægende JPQL Queries</p>
+        <p>Kunne håndtere parametre i REST endpoints i egne kodeeksempler</p>
+        <p>Kunne forklare og demonstrere håndtering af formdata i React med Controlled Components</p>
+        <br />
+        <p>Kunne redegøre for sammenhængen imellem OO-Entiteter og matchene klasser ved OneToMany, OneToOne, ManyToOne relationships</p>
+        <p>Kunne forklare og demonstrere begreget Lifting State i React</p>
+      </d>
     </div>
   )
 }

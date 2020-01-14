@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import entities.dto.CargoDTO;
 import facades.CargoFacade;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -60,7 +61,7 @@ public class CargoResource {
     @POST
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
-    //@RolesAllowed("admin")
+    @RolesAllowed("admin")
     public CargoDTO add(CargoDTO cargoDTO) throws Exception {
         return facade.add(cargoDTO);
     }
@@ -69,7 +70,7 @@ public class CargoResource {
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //@RolesAllowed("admin")
+    @RolesAllowed("admin")
     public CargoDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -81,7 +82,7 @@ public class CargoResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    //@RolesAllowed("admin")
+    @RolesAllowed("admin")
     public CargoDTO edit(CargoDTO cargoDTO) throws Exception {
         return facade.edit(cargoDTO);
     }

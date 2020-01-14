@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import Facade from './login/ApiFacade';
+import DeliveryFacade from './facade/DeliveryFacade'
+import TruckFacade from './facade/TruckFacade'
+import DriverFacade from './facade/DriverFacade'
 
 export default function Info() {
     const [deliveries, setDeliveries] = useState([]);
     const [trucks, setTrucks] = useState([]);
     const [drivers, setDrivers] = useState([]);
 
+
     useEffect(() => {
-      Facade.fetchDeliveries().then(res => setDeliveries(res));
-      Facade.fetchTrucks().then(res => setTrucks(res));
-      Facade.fetchDrivers().then(res => setDrivers(res));
+      DeliveryFacade.getDelivery().then(res => setDeliveries(res));
+      TruckFacade.getTruck().then(res => setTrucks(res));
+      DriverFacade.getDriver().then(res => setDrivers(res));
     },[])
+
     return (
         <div className="container">
           <h3>Deliveries</h3>
@@ -51,7 +55,6 @@ export default function Info() {
               {drivers.map((driver, index)=> <tr key={index}><td>{driver.name}</td></tr> )}
             </tbody>
           </table>
-
         </div>
       )
 }

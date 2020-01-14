@@ -1,49 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import facade from './ApiFacade'
-import Delivery from '../Delivery'
-import Cargo from '../Cargo'
-import Truck from '../Truck'
-import Driver from '../Driver'
+import { Link } from "react-router-dom";
+import settings from '../settings'
 
 export default function LoggedIn() {
   const [username, setUsername] = useState();
   const [role, setRole] = useState();
-  const [name, setName] = useState();
 
   useEffect(() => {
     facade.fetchUser().then(res => { setUsername(res.userName); setRole(res.roleList) }).catch(e => console.log(e));
   }, [])
 
-  const onClick = (evt) => {
-    const name = evt.target.name;
-    setName(name);
-  }
-
   return (
     <div>
       <p>Username: {username}</p>
       <p>Role: {role}</p>
-      <button type="button" className="btn btn-dark" name="delivery" onClick={onClick}>Delivery</button>
-      <button type="button" className="btn btn-dark" name="cargo" onClick={onClick}>Cargo</button>
-      <button type="button" className="btn btn-dark" name="truck" onClick={onClick}>Truck</button>
-      <button type="button" className="btn btn-dark" name="driver" onClick={onClick}>Driver</button>
-      {goTo(name)}
-
+      <Link to={settings.getURL("Deliveries")} className="btn btn-dark">Delivery</Link>
+      <Link to={settings.getURL("Cargoes")} className="btn btn-dark">Cargo</Link>
+      <Link to={settings.getURL("Trucks")} className="btn btn-dark">Truck</Link>
+      <Link to={settings.getURL("Drivers")} className="btn btn-dark">Driver</Link>
     </div>
   )
-}
-
-function goTo(name) {
-  switch (name) {
-    case "delivery":
-      return (<Delivery />)
-    case "cargo":
-      return (<Cargo />)
-    case "driver":
-      return (<Driver />)
-    case "truck":
-      return (<Truck />)
-    default:
-      return "";
-  }
 }

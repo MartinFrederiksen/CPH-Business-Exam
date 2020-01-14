@@ -62,7 +62,7 @@ public class TruckResource {
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public TruckDTO add(TruckDTO truckDTO) throws Exception {
         return facade.add(truckDTO);
     }
@@ -70,7 +70,7 @@ public class TruckResource {
     @DELETE
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public TruckDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -82,7 +82,7 @@ public class TruckResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public TruckDTO edit(TruckDTO truckDTO) throws Exception {
         return facade.edit(truckDTO);
     }

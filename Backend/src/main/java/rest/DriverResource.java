@@ -63,7 +63,7 @@ public class DriverResource {
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DriverDTO add(DriverDTO driverDTO) throws Exception {
         return facade.add(driverDTO);
     }
@@ -71,7 +71,7 @@ public class DriverResource {
     @DELETE
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DriverDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -83,7 +83,7 @@ public class DriverResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DriverDTO edit(DriverDTO driverDTO) throws Exception {
         return facade.edit(driverDTO);
     }

@@ -1,9 +1,12 @@
 package rest;
 
+import entities.Role;
 import entities.Truck;
+import entities.User;
 import entities.dto.TruckDTO;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -28,6 +31,7 @@ import utils.EMF_Creator;
  * @author Martin Frederiksen
  */
 public class TruckResourceTest {
+
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
     private Truck t1, t2;
@@ -41,7 +45,7 @@ public class TruckResourceTest {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
     }
-    
+
     @BeforeAll
     public static void setUpClass() {
         //This method must be called before you request the EntityManagerFactory
@@ -54,35 +58,57 @@ public class TruckResourceTest {
         RestAssured.port = SERVER_PORT;
         RestAssured.defaultParser = Parser.JSON;
     }
-    
+
     @AfterAll
     public static void tearDownClass() {
         //Don't forget this, if you called its counterpart in @BeforeAll
         EMF_Creator.endREST_TestWithDB();
         httpServer.shutdownNow();
     }
-    
+
     @BeforeEach
     public void setUp() throws MalformedURLException {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Truck").executeUpdate();
+            //em.createQuery("delete from User").executeUpdate();
+            //em.createQuery("delete from Role").executeUpdate();
             t1 = new Truck("Tr01", 10);
             t2 = new Truck("Tr02", 10);
             em.persist(t1);
             em.getTransaction().commit();
             em.getTransaction().begin();
             em.persist(t2);
+
+            //Role adminRole = new Role("admin");
+            //User admin = new User("admin", "test1");
+            //admin.addRole(adminRole);
+            //em.persist(adminRole);
+            //em.persist(admin);
+
             em.getTransaction().commit();
             trucks = new ArrayList();
             trucks.add(new TruckDTO(t1));
-            trucks.add(new TruckDTO(t2)); 
+            trucks.add(new TruckDTO(t2));
         } finally {
             em.close();
         }
-    }
-    
+    }/*
+    private static String securityToken;
+
+    private static void login(String role, String password) {
+        String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
+        securityToken = given()
+                .contentType("application/json")
+                .body(json)
+                .when().post("/api/login")
+                //.when().post("/login")
+                .then()
+                .extract().path("token");
+        System.out.println("TOKEN ---> " + securityToken);
+    }*/
+
     @Test
     public void testTruckAll200() throws Exception {
         given()
@@ -92,7 +118,7 @@ public class TruckResourceTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("size()", equalTo(trucks.size()));
     }
-    
+
     @Test
     public void testTruckById200() throws Exception {
         given()
@@ -111,7 +137,7 @@ public class TruckResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.BAD_REQUEST_400.getStatusCode());
     }
-    
+
     @Test
     public void testTruckById404() throws Exception {
         given()
@@ -120,72 +146,100 @@ public class TruckResourceTest {
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode());
     }
-    
+
     @Test
     public void testTruckAdd200() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .body(new Truck("Tr03", 10))
                 .post("/Truck/add").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("name", equalTo("Tr03"));
     }
-    
+
     @Test
     public void testTruckAdd400() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .body(t1)
                 .post("/Truck/add").then()
                 .assertThat()
                 .statusCode(HttpStatus.FOUND_302.getStatusCode());
     }
-    
+
     @Test
     public void testTruckEdit200() throws Exception {
+        //login("admin", "test1");
         t2.setName("Tr04");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .body(t2)
                 .put("/Truck/edit/").then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("name", equalTo("Tr04"));
     }
-    
+
     @Test
     public void testTruckEdit404() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .body(new Truck("Tr03", 10))
                 .put("/Truck/edit").then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode());
     }
-    
+
     @Test
     public void testTruckDelete200() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .delete("/Truck/delete/" + t1.getId()).then()
                 .assertThat()
                 .statusCode(HttpStatus.OK_200.getStatusCode());
     }
-    
+
     @Test
     public void testTruckDelete400() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .delete("/Truck/delete/0").then()
                 .assertThat()
                 .statusCode(HttpStatus.BAD_REQUEST_400.getStatusCode());
     }
-    
+
     @Test
     public void testTruckDelete404() throws Exception {
+        //login("admin", "test1");
         given()
                 .contentType("application/json")
+                //.accept(ContentType.JSON)
+                //.header("x-access-token", securityToken)
+                //.when()
                 .delete("/Truck/delete/99").then()
                 .assertThat()
                 .statusCode(HttpStatus.NOT_FOUND_404.getStatusCode());

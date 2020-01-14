@@ -61,7 +61,7 @@ public class DeliveryResource {
     @POST
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DeliveryDTO add(DeliveryDTO deliveryDTO) throws Exception {
         return facade.add(deliveryDTO);
     }
@@ -70,7 +70,7 @@ public class DeliveryResource {
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DeliveryDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -82,7 +82,7 @@ public class DeliveryResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @RolesAllowed("admin")
+    //@RolesAllowed("admin")
     public DeliveryDTO edit(DeliveryDTO deliveryDTO) throws Exception {
         return facade.edit(deliveryDTO);
     }

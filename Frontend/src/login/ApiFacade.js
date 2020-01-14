@@ -1,5 +1,5 @@
-//const URL = "http://melif.dk/Exam"; //Deploy
-const URL = "http://localhost:8080/exam"; //Local
+import URLSettings from '../settings'
+const URL = URLSettings.ServerUrl();
 
 function handleHttpErrors(res) {
     if (!res.ok) {
@@ -53,45 +53,10 @@ function ApiFacade() {
         return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
     }
 
-    const fetchData = () => {
-        return fetch(URL + "/api/swapi/demo", makeOptions("GET")).then(handleHttpErrors);
-    }
-
-    const fetchTrucks = () => {
-        return fetch(URL + "/api/Truck/all", makeOptions("GET")).then(handleHttpErrors);
-    }
-
-    const fetchDrivers = () => {
-        return fetch(URL + "/api/Driver/all", makeOptions("GET")).then(handleHttpErrors);
-    }
-
-    const fetchDriverDelete = (id) => {
-        return fetch(URL + "/api/Driver/delete/" + id, makeOptions("DELETE")).then(handleHttpErrors);
-    }
-
-    const fetchDeliveries = () => {
-        return fetch(URL + "/api/Delivery/all", makeOptions("GET")).then(handleHttpErrors);
-    }
-    
-    const fetchCargo = () => {
-        return fetch(URL + "/api/Cargo/all", makeOptions("GET")).then(handleHttpErrors);
-    }
-
-    const fetchCargoDelete = (id) => {
-        return fetch(URL + "/api/Cargo/delete/" + id, makeOptions("DELETE")).then(handleHttpErrors);
-    }
-
     return {
         login,
         logout,
         fetchUser,
-        fetchData,
-        fetchTrucks,
-        fetchDrivers,
-        fetchDriverDelete,
-        fetchDeliveries,
-        fetchCargo,
-        fetchCargoDelete
     }
 
 }

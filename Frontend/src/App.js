@@ -2,8 +2,14 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from "react-router-dom";
 import './style/App.css';
 import LoginForm from './login/LoginForm';
+import LoggedIn from './login/LoggedIn'
 import URLSettings from './settings'
 import Info from './Info';
+import Delivery from './Delivery'
+import Cargo from './Cargo'
+import Truck from './Truck'
+import Driver from './Driver'
+import DeliveryDetails from './DeliveryDetails'
 
 function App() {
 
@@ -15,7 +21,13 @@ function App() {
         <Switch>
           <Route exact path={URLSettings.getURL("Home")}> <Welcome /> </Route>
           <Route path={URLSettings.getURL("Login")}> <LoginForm /> </Route>
+          <Route path={URLSettings.getURL("LoggedIn")}> <LoggedIn /> </Route>
           <Route path={URLSettings.getURL("Info")}> <Info /> </Route>
+          <Route path={URLSettings.getURL("Deliveries")}> <Delivery /> </Route>
+          <Route path={URLSettings.getURL("DeliveryId", "id")}> <DeliveryDetails /> </Route>
+          <Route path={URLSettings.getURL("Trucks")}> <Truck /> </Route>
+          <Route path={URLSettings.getURL("Drivers")}> <Driver /> </Route>
+          <Route path={URLSettings.getURL("Cargoes")}> <Cargo /> </Route>
           <Route path={URLSettings.getURL("NoMatch")}> <NoMatch /> </Route>
         </Switch>
         <Footer />

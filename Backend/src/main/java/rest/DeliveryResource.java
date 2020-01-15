@@ -3,7 +3,12 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.dto.DeliveryDTO;
+import errorhandling.ExceptionDTO;
 import facades.DeliveryFacade;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
@@ -37,6 +42,8 @@ public class DeliveryResource {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @Operation(summary = "Welcome message",
+            tags = {"Welcome"})
     public String demo() {
         return "{\"msg\":\"DeliveryFacade\"}";
     }
@@ -44,6 +51,13 @@ public class DeliveryResource {
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all deliveries",
+            tags = {"Delivery"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = DeliveryDTO.class)),
+                        responseCode = "200", description = "Succesful operation")})
     public List<DeliveryDTO> getAll() {
         return facade.getAll();
     }
@@ -51,6 +65,19 @@ public class DeliveryResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get delivery by id",
+            tags = {"Delivery"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = DeliveryDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "400", description = "Invalid Id supplied"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Delivery not found")})
     public DeliveryDTO getById(@PathParam("id") long id) throws Exception{
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -61,6 +88,16 @@ public class DeliveryResource {
     @POST
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add delivery",
+            tags = {"Delivery"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = DeliveryDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "302", description = "Delivery already exists")})
     //@RolesAllowed("admin")
     public DeliveryDTO add(DeliveryDTO deliveryDTO) throws Exception {
         return facade.add(deliveryDTO);
@@ -70,6 +107,19 @@ public class DeliveryResource {
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Delete delivery",
+            tags = {"Delivery"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = DeliveryDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "400", description = "Invalid Id supplied"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Delivery not found")})
     //@RolesAllowed("admin")
     public DeliveryDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
@@ -82,6 +132,16 @@ public class DeliveryResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Edit delivery",
+            tags = {"Delivery"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = DeliveryDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Delivery not found")})
     //@RolesAllowed("admin")
     public DeliveryDTO edit(DeliveryDTO deliveryDTO) throws Exception {
         return facade.edit(deliveryDTO);

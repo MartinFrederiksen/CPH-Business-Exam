@@ -1,6 +1,7 @@
 package entities.dto;
 
 import entities.Driver;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import java.util.Objects;
  *
  * @author Martin Frederiksen
  */
+@Schema(name="Driver")
 public class DriverDTO {
     private Long id;
     private String name;

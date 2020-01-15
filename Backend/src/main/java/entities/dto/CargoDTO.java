@@ -1,12 +1,14 @@
 package entities.dto;
 
 import entities.Cargo;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Objects;
 
 /**
  *
  * @author Martin Frederiksen
  */
+@Schema(name="Cargo")
 public class CargoDTO {
     private Long id;
     private String name;

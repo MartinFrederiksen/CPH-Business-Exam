@@ -2,8 +2,14 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import entities.dto.DriverDTO;
 import entities.dto.TruckDTO;
+import errorhandling.ExceptionDTO;
 import facades.TruckFacade;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
@@ -37,6 +43,8 @@ public class TruckResource {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @Operation(summary = "Welcome message",
+            tags = {"Welcome"})
     public String demo() {
         return "{\"msg\":\"TruckFacade\"}";
     }
@@ -44,6 +52,13 @@ public class TruckResource {
     @GET
     @Path("all")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all trucks",
+            tags = {"Truck"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = TruckDTO.class)),
+                        responseCode = "200", description = "Succesful operation")})
     public List<TruckDTO> getAll() {
         return facade.getAll();
     }
@@ -51,6 +66,19 @@ public class TruckResource {
     @GET
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get truck by id",
+            tags = {"Truck"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = TruckDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "400", description = "Invalid Id supplied"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Truck not found")})
     public TruckDTO getById(@PathParam("id") long id) throws Exception{
         if (id <= 0) {
             throw new WebApplicationException("Invalid Id supplied", 400);
@@ -62,6 +90,16 @@ public class TruckResource {
     @Path("add")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Add truck",
+            tags = {"Truck"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = TruckDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "302", description = "Truck nalready exists")})
     //@RolesAllowed("admin")
     public TruckDTO add(TruckDTO truckDTO) throws Exception {
         return facade.add(truckDTO);
@@ -70,6 +108,19 @@ public class TruckResource {
     @DELETE
     @Path("delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Delete truck",
+            tags = {"Truck"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = TruckDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "400", description = "Invalid Id supplied"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Truck not found")})
     //@RolesAllowed("admin")
     public TruckDTO delete(@PathParam("id") long id) throws Exception {
         if (id <= 0) {
@@ -82,6 +133,16 @@ public class TruckResource {
     @Path("edit")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Edit truck",
+            tags = {"Truck"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                                schema = @Schema(implementation = TruckDTO.class)),
+                        responseCode = "200", description = "Succesful operation"),
+                @ApiResponse(content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = ExceptionDTO.class)),
+                        responseCode = "404", description = "Truck not found")})
     //@RolesAllowed("admin")
     public TruckDTO edit(TruckDTO truckDTO) throws Exception {
         return facade.edit(truckDTO);

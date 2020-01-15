@@ -1,5 +1,6 @@
 package rest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,6 +17,8 @@ import utils.SetupTestUsers;
 public class SetupResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
+    @Operation(summary = "Setup dummy data and users",
+            tags = {"Setup"})
     public String demo() {
         new SetupDummyData().setup();
         new SetupTestUsers().setup();

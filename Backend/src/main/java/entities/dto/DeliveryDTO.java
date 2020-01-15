@@ -1,6 +1,7 @@
 package entities.dto;
 
 import entities.Delivery;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
  *
  * @author Martin Frederiksen
  */
+@Schema(name="Delivery")
 public class DeliveryDTO {
     private Long id;
     private Date shippingDate;

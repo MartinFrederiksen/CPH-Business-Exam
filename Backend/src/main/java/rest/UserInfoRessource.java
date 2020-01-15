@@ -1,6 +1,10 @@
 package rest;
 
 import entities.dto.UserDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
@@ -31,6 +35,13 @@ public class UserInfoRessource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user")
     @RolesAllowed({"user", "admin"})
+    @Operation(summary="Get user info", 
+            tags={"User"},
+            responses={
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json",
+                        schema = @Schema(implementation = UserDTO.class)),
+                        responseCode = "200", description = "Succesful operation")})
     public UserDTO getFromUser() {
         UserPrincipal userPrincipal = (UserPrincipal)securityContext.getUserPrincipal();
         UserDTO user = new UserDTO(userPrincipal.getName(), userPrincipal.getRoles());
